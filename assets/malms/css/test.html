@@ -1,0 +1,212 @@
+<?php session_start(); ?>
+<head>
+<title>CentrinOnline</title>
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" > -->
+<?php
+foreach (glob('apps/config/*.php') as $config) {
+	include $config;
+}
+include'apps/views/tampilan/top.php';
+include'apps/models/mcompany.php';
+include'apps/models/msolution.php';
+include'apps/controllers/visit.php';
+?>
+<link href="<?php echo $base_url ?>assets/images/icon-cop.png" rel="icon" type="image/png">
+</head>
+<body>
+
+
+	<div class="slider">
+	    <div class="swiper-container">
+	        <div class="swiper-wrapper">
+	        	<div class="swiper-slide"><img src="<?php echo $base_url ?>assets/images/slider/tematik01.jpg" style="width:100%; top:0; position:absolute; left:0; right:0;"></div>
+	        	<div class="swiper-slide"><img src="<?php echo $base_url ?>assets/images/slider/slidebanner014.jpg" style="width:100%; top:0; position:absolute; left:0; right:0;"></div>            
+	            <div class="swiper-slide"><img src="<?php echo $base_url ?>assets/images/slider/slidebanner007.jpg" style="width:100%; top:0; position:absolute; left:0; right:0;"></div>
+
+	        </div>
+	        <!-- Add Pagination -->
+	        <div class="swiper-pagination"></div>
+	        <!-- Add Arrows -->
+	        <div class="swiper-button-next"></div>
+	        <div class="swiper-button-prev"></div>
+	    </div>
+	</div>
+
+
+
+
+	<?php include'menu.php'; ?>
+
+
+
+
+	<div class="wrapper">
+		<div id="solution" class="getWidth min-padding white threecols">
+			<h1 class="title">SOLUTION</h1>
+			<?php
+			$no=0;
+            foreach (rsolution(6,"RAND()") as $hasil) {
+              $desk=substr($hasil['description'],0,60);
+              $replace=str_replace(' ', '-', $hasil['title_solution']);
+				$no++;
+				if ($no=="1" || $no=="4") {
+					$animate="wow fadeInLeft";
+				}elseif ($no=="3" || $no=="6") {
+					$animate="wow fadeInRight";
+				}else{
+					$animate="";
+				}
+				$desk=substr($hasil['description'],0,100);
+				$title=str_replace(" ","-",$hasil['title_solution']);
+			?>
+			<div class="fcols-spc solutionbox increase delay spc-tb <?php echo $animate ?>">
+				<img src="<?php echo $base_url ?>assets/images/solution/<?php echo $hasil['img_solution'] ?>" class="imgsolution square" onclick="location.href='<?php echo $base_url ?>solution/<?php echo $title ?>'">
+				<p onclick="location.href='<?php echo $base_url ?>solution/<?php echo $title ?>'" class="font-bold" style="text-align:center;"><?php echo $hasil['title_solution'] ?></p>
+				<p class="spc-rl full-length" style="max-width:100px; min-width:100px;"><?php echo $desk ?>...</p>
+				<a href="<?php echo $base_url ?>solution/<?php echo $title ?>"  class="myButton-flat-orange delay" style="float:right; margin-right:10px;">Read More</a>
+			</div>
+			<?php }?>
+			<p class="full-length" style="margin-top:50px; text-align:center; float:left;"><a href="<?php echo $base_url ?>solution.html" class="myButton-flat-orange delay">View More Solution</a></p>
+		</div>
+
+		<div class="quotes getWidth min-padding">
+			<h2>PIONEER, PROFESIONAL, EXPERIENCE</h2>
+		</div>
+
+		<div id="company" class="full-length white" style="float:left; padding-top:50px;">
+			<h1 class="title">WHY CHOOSE US ?</h1>
+			<!-- <p style="font-family: 'SEGOE UII'; text-align: center; color: #A0A0A0">Bla bla bla bla bla</p> -->
+			<div class="getWidth min-padding threecols service" onclick="location.href='company.html'">
+				<?php
+				foreach (rwcu() as $res) {
+					$linkwcu=str_replace(' ','-',$res['title_wcu']);
+				?>
+				<div class="cols-spc conServices spc-tb pad-tb delay increase">
+				<a href="<?php echo $base_url ?>company/<?php echo $linkwcu ?>">
+					<table class="full-length">
+						<tr>
+							<td style="width: 30%;"><img src="<?php echo $base_url ?>assets/images/icon/<?php echo $res['image_wcu'] ?>"></td>
+							<td align="center" class="textservice"><?php echo $res['title_wcu'] ?></td>
+						</tr>
+					</table>
+				</a>
+				</div>
+				<?php }?>
+			</div>
+
+			<div class="getWidth min-padding profile">
+				<h1><b>WHAT IS CENTRIN ONLINE ?</b></h1>
+				<p style="width:50%; max-width:50%; text-align:justify; font-size:1.5vw;">PT Centrin Online Prima is currently one of Indonesia Internet Service Provider (ISP) pioneer, and one of the largest ISP in the country. The company changed its name from PT Khasanah Timur Indonesia (KTI) to PT Centrin Online Prima (COP) according to the notarial deed made by Kirana Ivyminerva Wilamarta,S.H.,LL.M Nomor 1 dated November 18, 2013, Surat Keputusan Menteri Hukum dan Hak Asasi Manusia Republik Indonesia Nomor AHU-11696.AH.01.02 tahun 2014. COP founded in 1996 and has Internet Service Provider license from Indonesia government No. KM.97/PT/102/MPPT-96, also have the ITKP certifikation from Direktur Jenderal Pos dan Telekomunikasi No. 330/Dirjen/2005.</p>			
+				<a href="<?php echo $base_url ?>company.html"  class="myButton-flat-orange delay">Read More</a>
+			</div>
+			<div class="getWidth min-padding network" style="text-align:center; background: #FFF; ">
+				<div class="full-length" style="min-height:400px; float:left;">
+					<img src="<?php echo $base_url ?>assets/images/indonesian-maps.png" style="width:100%;" id="img-coverage">
+					<img src="<?php echo $base_url ?>assets/images/jakarta-maps.jpg" style="width:100%; display:none;" id="img-branches">
+				</div>
+				<button id="ncoverage"  class="myButton-flat-blue delay">Network Coverage</button>
+				<button id="branches"  class="myButton-flat-blue delay">Branches</button><br><br>
+			</div>
+		</div>
+
+
+		<div id="client" class="getWidth min-padding threecols strip">
+			<div class='fcols-spc strips-1' style="text-align:center;">
+				<p class="rounded client delay">
+					<img src="<?php echo $base_url ?>assets/images/icon/white-hotel.png" style="width:84%;" class="imgrotate delay">
+				</p>
+			</div>
+			<div class='fcols-spc strips-2' style="text-align:center;">
+				<p class="rounded client delay">
+					<img src="<?php echo $base_url ?>assets/images/icon/white-building.png" style="width:84%;" class="imgrotate delay">
+				</p>
+			</div>
+			<div class='fcols-spc strips-3' style="text-align:center;">
+				<p class="rounded client delay">
+					<img src="<?php echo $base_url ?>assets/images/icon/white-enterprise.png" style="width:84%;" class="imgrotate delay">
+				</p>
+			</div>
+		</div>
+
+
+		<div id="imgclient" class="getWidth min-padding">
+	        <div id="amazon_scroller1" class="amazon_scroller tab tab-1">
+                <div class="amazon_scroller_mask">
+                    <ul>
+                        <li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/logo_mercure.jpg"/></a></li>
+                        <li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/amaris_hotel.jpg"/></a></li>
+                        <li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/logo_swiss-bel.jpg"/></a></li>
+						<li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/logo_novotel.jpg"/></a></li>
+                        <li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/logo_accor.png"/></a></li>
+                        <li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/logo_lemeridien.png"/></a></li>
+                        <li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/logo_hardrock.png"/></a></li>
+
+                    </ul>
+                </div>
+	    	</div>
+	        <div id="amazon_scroller2" class="amazon_scroller tab tab-2" style="display:none;">
+                <div class="amazon_scroller_mask">
+                    <ul>
+                        <li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/logo_greenbay.jpg"/></a></li>
+                        <li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/logo_greenpalace.jpg"/></a></li>
+                        <li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/logo_kalibata.jpg"/></a></li>
+						<li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/logo_greenbay.jpg"/></a></li>
+                        <li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/logo_kebagusan.jpg"/></a></li>
+                        <li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/logo_mgr2.jpg"/></a></li>
+                        <li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/logo_nuansahijau.png"/></a></li>
+                    </ul>
+                </div>
+	    	</div>
+	        <div id="amazon_scroller3" class="amazon_scroller tab tab-3" style="display:none;">
+                <div class="amazon_scroller_mask">
+                    <ul>
+                        <li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/logo_pizzahut.jpg"/></a></li>
+                        <li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/logo_Johnson-Johnson.png"/></a></li>
+                        <li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/logo_bni.png"/></a></li>
+						<li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/logo_mazda.png"/></a></li>
+                        <li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/logo_petrochina.png"/></a></li>
+                        <li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/logo_RETAIL.jpg"/></a></li>
+                        <li><a href="link1"><img src="<?php echo $base_url ?>assets/images/clients/logo_nuansahijau.png"/></a></li>                        
+                    </ul>
+                </div>
+	    	</div>					
+		</div>
+
+
+
+		<div class="getWidth min-padding" id="contactus" style="background-color:#F1FEFF; padding-top:50px; padding-bottom:50px; float:left; position:relative;">
+		<form method="post" action='<?php echo $base_url ?>crud.html'>
+			<table class="full-length" style="margin-bottom:50px;">
+				<tr>
+					<td  style="text-align:center;" colspan="2"><h1 class="title">Mail Us</h1></td>
+				</tr>
+				<tr>					
+					<td style="text-align:center; width:50%;">
+						<input type="text" name="name" placeholder="Your Name...." class="spc-tb" required="required" style="width:80%; padding:10px; border-radius:0;">
+					</td>
+					<td style="text-align:center; width:50%;">
+						<input type="email" name="email" placeholder="Your Mail...." class="spc-tb" required="required" style="width:80%; padding:10px; border-radius:0;">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align:center;"><textarea class="spc-tb" name="msg" style="padding:10px; width:90%; max-width:90%; border-radius:0; height:200px; max-height:200px;"></textarea></td>
+				</tr>
+				<tr>
+					<td><input type="submit" value="Send" class="myButton-flat-orange spc-tb" style="width:70%; margin-left:10%;" name="actmsg"></td>
+					<td align="right"><button class="myButton-flat-orange delay" style="width:80%; margin-right:10%;" onclick="location.href='<?php echo $base_url ?>contact.html'">Go to contact pages>></button></td>
+				</tr>
+			</table>
+			</form>
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d247.8970399339425!2d106.81608876567545!3d-6.217141324192107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f6aac8078b11%3A0x32dcac908cc41d9c!2sJl.+Jend.+Sudirman+No.Kav+47-48%2C+Karet+Semanggi%2C+Kecamatan+Setiabudi%2C+Kota+Jakarta+Selatan%2C+Daerah+Khusus+Ibukota+Jakarta+12930!5e0!3m2!1sen!2sid!4v1477881438106" style="width:100%; height:300px;" frameborder="0" allowfullscreen></iframe>
+		</div>
+
+		<?php include'apps/views/footer.php'; ?>
+
+	</div>
+
+<?php 
+	// include'livechat.php';
+?>
+
+</body>
+<?php include'apps/views/tampilan/bottom.php'; ?>
